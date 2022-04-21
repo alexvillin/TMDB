@@ -50,6 +50,7 @@ export default new Vuex.Store({
     total: 0,
     genre: null,
     orderBy: null,
+    search: null
   },
   getters: {
     favourites(state) {
@@ -130,7 +131,8 @@ export default new Vuex.Store({
       return http.get(`${url}/movie/popular`, {
         params: {
           page: state.currentPage,
-          order_by: state.orderBy
+          sort_by: `${state.orderBy}.desc`,
+          with_genres: state.genre
         }
       }).then(({data}: {data:any}) => {
         state.movies = data.results;
@@ -138,12 +140,12 @@ export default new Vuex.Store({
         state.total = data.total_results;
       });
     },
-    getMovieById(id) {
+    getMovieById(context, id) {
       return http.get(`${url}/movie/${id}`);
     },
     getRelatedMovies({state}, id) {
       return http.get(`${url}/movie/${id}/similar`).then(({data}: {data:any}) => {
-        state.related = data.result
+        state.related = data;
       });
     },
     getGenres({state}) {
@@ -151,6 +153,20 @@ export default new Vuex.Store({
         state.genres = data.genres
       });
     },
+    getSearchMovie({state}, payload) {
+      return http.get(`${url}/search/movie`, {
+        params: {
+          query: payload,
+          sort_by: `${state.orderBy}.desc`,
+          with_genres: state.genre
+        }
+      }).then(({data}: {data:any}) => {
+        state.movies = data.results;
+        state.currentPage = data.page;
+        state.total = data.total_results;
+        state.search = payload;
+      });
+    }
 
   },
   modules: {

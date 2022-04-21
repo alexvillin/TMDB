@@ -1,11 +1,12 @@
 <template>
   <router-link :to="'/details/' + item.id" class="film-card"
     ><img :src="getImageURL(item.poster_path)" />
-    <div class="rating">
-      <i class="active">{{item.vote_average}}</i>
-    </div>
-    <p class="title">{{ item.title }}</p>
-    <template v-if="genres && genres.length">
+    <div class="m-3 mb-4">
+      <div class="rating">
+        <i class="active">{{item.vote_average}}</i>
+      </div>
+      <p class="title">{{ item.title }}</p>
+      <template v-if="genres && genres.length">
       <span
           v-for="id in item.genre_ids"
           :key="id"
@@ -16,14 +17,15 @@
           class="badge badge-warning mr-1"
       >{{ genresMap[id] }}
       </span>
-    </template>
-    <div class="description">{{ item.overview }}</div>
-    <i
-      :class="isFavourite ? 'ion-md-heart' : 'ion-md-heart-empty'"
-      @click.prevent="toggleFavourite"
-      title="Add to favourites"
-      class="icon"
-    ></i>
+      </template>
+      <div class="description">{{ item.overview }}</div>
+      <i
+          :class="isFavourite ? 'ion-md-heart' : 'ion-md-heart-empty'"
+          @click.prevent="toggleFavourite"
+          title="Add to favourites"
+          class="icon"
+      ></i>
+    </div>
   </router-link>
 </template>
 
@@ -65,13 +67,12 @@ export default {
 <style scoped lang="scss">
 .film-card {
   margin: 0.5vw;
-  padding: 15px;
+  padding: 4px;
   //width: 28%;
   min-width: 200px;
   //display: inline-block;
   background-color: white;
   position: relative;
-  padding-bottom: 40px;
   border: 1px solid grey;
   border-radius: 5px;
 
@@ -126,10 +127,6 @@ export default {
   }
 
   &.small {
-    max-width: 160px;
-    min-width: 130px;
-    padding: 0;
-    padding-bottom: 35px;
 
     .title {
       padding: 0 10 px;

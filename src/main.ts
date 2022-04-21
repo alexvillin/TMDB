@@ -13,6 +13,9 @@ import {BPaginationNav} from "bootstrap-vue/src/components/pagination-nav";
 import {BFormGroup} from "bootstrap-vue/src/components/form-group";
 import {BInputGroup} from "bootstrap-vue/src/components/input-group";
 import {BCard} from "bootstrap-vue/src/components/card";
+import {BMedia} from "bootstrap-vue/src/components/media";
+import {BImg} from "bootstrap-vue/src/components/image";
+import {BButton} from "bootstrap-vue/src/components/button";
 
 import "bootstrap/dist/css/bootstrap.css";
 import "bootstrap-vue/dist/bootstrap-vue.css";
@@ -30,6 +33,9 @@ Vue.component("b-pagination", BPagination);
 Vue.component("b-form-group", BFormGroup);
 Vue.component("b-input-group", BInputGroup);
 Vue.component("b-card", BCard);
+Vue.component("b-img", BImg);
+Vue.component("b-media", BMedia);
+Vue.component("b-button", BButton);
 
 new Vue({
   router,

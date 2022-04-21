@@ -16,9 +16,9 @@
               {{ favourites.length }}
             </div>
           </router-link>
-          <button v-if="!sessionId" @click="login">Login</button>
           <router-link to="/account" class="nav-link">{{account.username}}</router-link>
-          <button v-if="sessionId" @click="logout">Logout</button>
+          <b-button v-if="!sessionId" variant="outline-primary" @click="login">Login</b-button>
+          <b-button v-if="sessionId" variant="outline-primary" @click="logout">Logout</b-button>
         </b-navbar-nav>
       </b-collapse>
     </b-navbar>

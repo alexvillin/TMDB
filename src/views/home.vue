@@ -1,7 +1,7 @@
 <template>
   <div id="home">
     <form class="container-flex well">
-      <b-form-input type="search" placeholder="Search" v-model="search" class="col-sm"></b-form-input>
+      <b-form-input type="search" placeholder="Search" v-model="searchModel" class="col-sm"></b-form-input>
       <div class="col-sm-4">
         <b-input-group size="md" prepend="Genre">
 <!--                <select v-model="genre" class="form-control col-sm">-->
@@ -31,10 +31,13 @@
                  :isFavourite="true"
                  class="col-sm"></film-card>
     </div>
-    <b-pagination size="md"
-                  :total-rows="total"
-                  v-model="page"
-                  :per-page="movies.length"></b-pagination>
+    <div class="mt-4">
+      <b-pagination class="d-inline-flex"
+                    :total-rows="total"
+                    v-model="page"
+                    :per-page="movies.length"></b-pagination>
+    </div>
+
   </div>
 </template>
 
@@ -47,7 +50,6 @@ export default {
   components: {FilmCard},
   data: function () {
     return {
-      search: '',
       isLoading: true,
       orderByOptions: [
         {text: "Title", value: "title"},
@@ -62,7 +64,7 @@ export default {
     this.getGenres();
   },
   computed: {
-    ...mapState(["genres", "movies", "total", "currentPage", "genre", "orderBy"]),
+    ...mapState(["genres", "movies", "total", "currentPage", "genre", "orderBy", "search"]),
     page: {
       get() {
         return this.currentPage
@@ -77,12 +79,24 @@ export default {
         value: item.id
       }))
     },
+    searchModel: {
+      get() {
+        return this.search;
+      },
+      set(value) {
+        // this.$store.commit("setSearchMovie", value)
+        this.page = 1;
+        this.$store.dispatch("getSearchMovie", value);
+      }
+    },
     genreModel: {
       get() {
         return this.genre;
       },
       set(value) {
         this.$store.commit("setGenre", value)
+        this.page = 1;
+        this.getPopularMovies();
       }
     },
     orderByModel: {
@@ -91,18 +105,17 @@ export default {
       },
       set(value) {
         this.$store.commit("setOrderBy", value)
+        this.page = 1;
+        this.getPopularMovies();
       }
     }
   },
   watch: {
     page() {
       this.getPopularMovies();
+      this.scrollToTop();
 //           router.push('/');
     },
-    genre() {
-      this.page = 1;
-      this.getPopularMovies();
-    }
   },
   methods: {
     getGenres(){
@@ -115,6 +128,9 @@ export default {
       }).finally(() => {
         this.isLoading = false;
       });
+    },
+    scrollToTop() {
+      window.scrollTo(0,0);
     }
   }
 }
