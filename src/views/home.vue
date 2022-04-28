@@ -1,7 +1,9 @@
 <template>
   <div id="home">
     <form class="container-flex well">
-      <b-form-input type="search" placeholder="Search" v-model="searchModel" class="col-sm"></b-form-input>
+      <div class="col-sm-4">
+        <b-form-input type="search" placeholder="Search" v-model="searchModel"></b-form-input>
+      </div>
       <div class="col-sm-4">
         <b-input-group size="md" prepend="Genre">
 <!--                <select v-model="genre" class="form-control col-sm">-->
@@ -14,7 +16,7 @@
               v-model="genreModel" :options="genresOptions" class="col-md" id="order-by"></b-form-select>
         </b-input-group>
       </div>
-      <div class="col-sm-2">
+      <div class="col-sm-4">
         <b-input-group size="md" prepend="Order by">
           <b-form-select
               v-model="orderByModel" :options="orderByOptions" class="col-md" id="order-by"></b-form-select>
@@ -137,5 +139,9 @@ export default {
 </script>
 
 <style scoped>
+.isLoading {
+  position: absolute;
+  margin: 0 auto;
+}
 
 </style>
